@@ -196,21 +196,24 @@ function isReset(currDate, resetDate) {
 
 // Force a render of lists
 function renderList(listNum) {
+    // false if any of the renderTodo() calls hit a reset
+    var ret = true;
     switch (listNum) {
         case TODO_DAILY:
             dailyItems.forEach(todo => {
-                renderTodo(todo, listNum=TODO_DAILY);
+                ret = renderTodo(todo, listNum=TODO_DAILY) && ret;
             });
             break;
         case TODO_WEEKLY:
             weeklyItems.forEach(todo => {
-                renderTodo(todo, listNum=TODO_WEEKLY);
+                ret = renderTodo(todo, listNum=TODO_WEEKLY) && ret;
             });
             break;
         default:
             console.error("Invalid argument for renderList()");
             break;
     }
+    return ret;
 }
 
 // Function to render each todo object on the screen
@@ -459,25 +462,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const ref = localStorage.getItem('TOF-TODO_todoItemsRef');
     const refDaily = localStorage.getItem('TOF-TODO_todoItemsRefDaily');
     const refWeekly = localStorage.getItem('TOF-TODO_todoItemsRefWeekly');
+    /*
     if (ref) {
         todoItems = JSON.parse(ref);
         todoItems.forEach(t => {
             renderTodo(t);
         });
     }
+    */
     // If missing either daily or weekly in localstorage, init render
     if (refDaily) {
         dailyItems = JSON.parse(refDaily);
     } else {
         initList(TODO_DAILY);
     }
-    renderList(TODO_DAILY);
     if (refWeekly) {
         weeklyItems = JSON.parse(refWeekly);
     } else {
         initList(TODO_WEEKLY);
     }
-    renderList(TODO_WEEKLY);
+    const noDailyReset = renderList(TODO_DAILY);
+    const noWeeklyReset = renderList(TODO_WEEKLY);
+    // Retry render if reset
+    if (!noDailyReset || !noWeeklyReset) {
+        renderList(TODO_DAILY);
+        renderList(TODO_WEEKLY);
+    }
 
     // Log site version in localstorage
     localStorage.setItem('TOF-TODO_siteVer', SITE_VER);
