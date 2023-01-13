@@ -1,14 +1,14 @@
 // Version of website
-var SITE_VER = "1.0.0";
+var SITE_VER = "1.0.1";
 
 // Integer mapping for each list
-var TODO_MISC   = 0;
-var TODO_DAILY  = 1;
-var TODO_WEEKLY = 2;
+const TODO_MISC   = 0;
+const TODO_DAILY  = 1;
+const TODO_WEEKLY = 2;
 
 // Array to hold todo list items
 let todoItems = [];
-const DEF__dailyItems = [
+const DEF__dailyItems = [       // LAST ID NO. : 11
     {
         text: 'Sign-In rewards',
         checked: false,
@@ -30,9 +30,14 @@ const DEF__dailyItems = [
         id: 3,
     },
     {
-        text: 'Vehicle Maintenance',
+        text: 'Mirroria Mira Games (8x)',
         checked: false,
-        id: 4,
+        id: 7,
+    },
+    {
+        text: 'Spend Appointed Research energy (keep under 20)',
+        checked: false,
+        id: 8,
     },
     {
         text: 'Crew Donation',
@@ -40,12 +45,32 @@ const DEF__dailyItems = [
         id: 5,
     },
     {
-        text: 'Support Points (cap. 1500)',
+        text: '<b>[Optional]</b> Daily Training (2x)',
+        checked: false,
+        id: 9,
+    },
+    {
+        text: '<b>[Optional]</b> Aesperia Black Market',
+        checked: false,
+        id: 10,
+    },
+    {
+        text: '<b>[Optional]</b> Cetus Island crane machine',
+        checked: false,
+        id: 11,
+    },
+    {
+        text: '<b>[Optional]</b> Vehicle Maintenance',
+        checked: false,
+        id: 4,
+    },
+    {
+        text: '<b>[Optional]</b> Support Points (cap. 1500)',
         checked: false,
         id: 6,
     },
 ];
-const DEF__weeklyItems = [
+const DEF__weeklyItems = [      // LAST ID NO. : 117
     {
         text: 'Weekly Challenges (up to 950 points)',
         checked: false,
@@ -65,6 +90,11 @@ const DEF__weeklyItems = [
         text: 'Void Rifts',
         checked: false,
         id: 103,
+    },
+    {
+        text: 'Wormhole',
+        checked: false,
+        id: 117,
     },
     {
         text: 'Crew Missions (4x)',
@@ -281,7 +311,7 @@ function renderTodo(todo, listNum=TODO_MISC, sync=true) {
         // Clear whitespace from list container if no elements in list are left
         if (todoItems.length === 0 && dailyItems.length === 0 && weeklyItems.length === 0)
             list.innerHTML = '';
-        return;
+        return true;
     }
 
     // Additional string is 'done' if checked, and '' otherwise
@@ -433,6 +463,14 @@ function listClickListener(event, list) {
         deleteTodo(itemKey, list);
     }
 }
+
+// Add listener for data reset button
+const resetDataBtn = document.querySelector('.js-reset-data-btn');
+resetDataBtn.addEventListener('click', ()=> {
+    localStorage.clear();
+    window.alert("Local data has been reset! Refreshing page...");
+    location.reload();
+});
 
 // Select entire list
 const list = document.querySelector('.js-todo-list');

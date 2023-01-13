@@ -30,6 +30,8 @@ body {
 
 .r-align {
     text-align: right;
+    display:inline;
+    float: right;
 }
 
 .container {
@@ -210,4 +212,8 @@ li a:hover {
     text-align: center;
     min-height: 20vh;
     flex-direction: column;
+}
+
+.side-btn {
+    display:inline;
 }
