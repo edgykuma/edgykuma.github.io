@@ -29,6 +29,7 @@ body {
 }
 
 .r-align {
+    clear: both;
     text-align: right;
     display:inline;
     float: right;

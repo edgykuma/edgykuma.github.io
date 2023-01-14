@@ -6,9 +6,13 @@ const TODO_MISC   = 0;
 const TODO_DAILY  = 1;
 const TODO_WEEKLY = 2;
 
+// Max ID number per list
+const MAX_DAILIES = 13;
+const MAX_WEEKLIES = 118;
+
 // Array to hold todo list items
 let todoItems = [];
-const DEF__dailyItems = [       // LAST ID NO. : 11
+const DEF__dailyItems = [
     {
         text: 'Sign-In rewards',
         checked: false,
@@ -45,6 +49,11 @@ const DEF__dailyItems = [       // LAST ID NO. : 11
         id: 5,
     },
     {
+        text: '<b>[Island]</b> Claim resources',
+        checked: false,
+        id: 12,
+    },
+    {
         text: '<b>[Optional]</b> Daily Training (2x)',
         checked: false,
         id: 9,
@@ -70,7 +79,7 @@ const DEF__dailyItems = [       // LAST ID NO. : 11
         id: 6,
     },
 ];
-const DEF__weeklyItems = [      // LAST ID NO. : 117
+const DEF__weeklyItems = [
     {
         text: 'Weekly Challenges (up to 950 points)',
         checked: false,
